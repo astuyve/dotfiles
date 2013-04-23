@@ -1,1 +1,44 @@
-/home/aj/.bin/imgup
+#!/usr/bin/env python2.7
+# file: imgup.py
+
+# simple anonymous photo upload to imgur (by default)
+# returns the url for the image
+
+import os
+import requests
+from argparse import ArgumentParser, FileType
+cid_path = os.path.join(os.path.expanduser('~'), '.imgur_client_id')
+def main():
+    post_url = 'https://api.imgur.com/3/image.json'
+    with open(cid_path, 'r') as fd:
+        client_id = fd.read()
+    if args.service == 'flickr':
+        post_url = 'http://api.flickr.com/services/upload/'
+        client_id = args.client_id  # optional
+    res = requests.post(
+        post_url,
+        verify = False,
+        params = {'type': 'file'},
+        files  = {'image': args.image},
+        headers= {'Authorization': "Client-ID " + client_id})
+    j = res.json()
+
+    if j['success']:
+        print 'http://imgur.com/' + j['data']['id']
+    else:
+        print 'status: {0}\nerror: {1}'.format(j['status'], j['data']['error'])
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    import sys
+    parser = ArgumentParser(description='Upload an image to imgur.')
+    parser.add_argument('--client_id', type=str,
+                        help='Your OAuth Client-ID if needed')
+    parser.add_argument('image', type=FileType('rb'))
+    parser.add_argument('--service',
+                        help='The service to upload to (defaults to anonymous imgur upload)',
+                        action='store_const', const='service')
+    args = parser.parse_args()
+
+    main()
