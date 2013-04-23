@@ -1,0 +1,1 @@
+/home/aj/.bash_aliases
