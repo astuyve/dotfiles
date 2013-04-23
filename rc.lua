@@ -177,8 +177,7 @@ for s = 1, screen.count() do
                      return '<span background="#92B0A0" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF" background="#92B0A0">' .. args[1] .. args[2] .. '%</span></span>'
                  end, 1, "BAT0")
 
-	-- Wifi Widget
-	wifiwidget = awful.util.spawn_with_shell("run-once nm-applet")
+	--wifiwidget = awful.util.spawn_with_shell('run-once nm-applet')
 
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist(function(c)
@@ -198,7 +197,7 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
 		batwidget,
-		wifiwidget,
+		--wifiwidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -400,4 +399,5 @@ end)
 
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+awful.util.spawn_with_shell('run-once nm-applet')
 -- }}}
