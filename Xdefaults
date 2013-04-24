@@ -13,7 +13,7 @@ URxvt.cursorColor:      green
 URxvt.keysym.M-v: perl:clipboard:paste
 URxvt.iso14755:         False
 URxvt.perl-ext-common:  matcher,readline,clipboard
-URxvt.urlLauncher:      firefox-trunk
+URxvt.urlLauncher:      chromium-browser
 URxvt.matcher.button:   1
 URxvt.scrollBar:        false
 URxvt*borderLess:       false
