@@ -165,6 +165,49 @@ for s = 1, screen.count() do
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
 
+---- ALSA volume widget
+alsa_channel = "Master"
+alsa_step = "5%"
+alsa_color_unmute = "#AECF96"
+alsa_color_mute = "#FF5656"
+alsa_mixer = terminal .. " -e alsamixer" -- or whatever your preferred sound mixer is
+-- create widget
+alsawidget = awful.widget.progressbar()
+alsawidget:set_width(8)
+alsawidget:set_vertical(true)
+alsawidget:set_background_color("#494B4F")
+alsawidget:set_color("#AECF96")
+-- mouse bindings
+alsawidget.widget:buttons(awful.util.table.join(
+    awful.button({ }, 1, function()
+        awful.util.spawn(alsa_mixer)
+    end),
+    awful.button({ }, 3, function()
+        awful.util.spawn("amixer -D pulse sset " .. alsa_channel .. " toggle")
+        vicious.force({ alsawidget })
+    end),
+    awful.button({ }, 4, function()
+        awful.util.spawn("amixer -D pulse sset " .. alsa_channel .. " " .. alsa_step .. "+")
+        vicious.force({ alsawidget })
+    end),
+    awful.button({ }, 5, function()
+        awful.util.spawn("amixer -D pulse sset " .. alsa_channel .. " " .. alsa_step .. "-")
+        vicious.force({ alsawidget })
+    end)
+))
+-- create tooltip
+alsawidget_tip = awful.tooltip({ objects = { alsawidget.widget }})
+vicious.register(alsawidget, vicious.widgets.volume, function (widget, args)
+    if args[2] == "♩" then
+        alsawidget_tip:set_text(" [Muted] ")
+        widget:set_gradient_colors({ alsa_color_mute, alsa_color_mute, alsa_color_mute })
+        return 100
+    end
+    widget:set_gradient_colors({ alsa_color_unmute, alsa_color_unmute, alsa_color_unmute })
+    alsawidget_tip:set_text(" " .. alsa_channel .. ": " .. args[1] .. "% ")
+    return args[1]
+end, 5, alsa_channel) -- relatively high update time, use of keys/mouse will force update
+
   -- Battery Widget
   --baticon = widget ({type = "imagebox" })
   --baticon.image = image(beautiful.widget_battery)
@@ -197,6 +240,7 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
 		batwidget,
+		alsawidget.widget,
 		--wifiwidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
@@ -217,7 +261,8 @@ root.buttons(awful.util.table.join(
 globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
-    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+	
+	awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -277,6 +322,20 @@ globalkeys = awful.util.table.join(
               end)
 )
 
+globalkeys = awful.util.table.join(globalkeys, awful.key({ }, "XF86AudioRaiseVolume", function()
+    awful.util.spawn("amixer -D pulse sset " .. alsa_channel .. " " .. alsa_step .. "+")
+    vicious.force({ alsawidget })
+end))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ }, "XF86AudioLowerVolume", function()
+    awful.util.spawn("amixer -D pulse sset " .. alsa_channel .. " " .. alsa_step .. "-")
+    vicious.force({ alsawidget })
+end))
+globalkeys = awful.util.table.join(globalkeys, awful.key({ }, "XF86AudioMute", function()
+    awful.util.spawn("amixer -D pulse sset " .. alsa_channel .. " toggle")
+    vicious.force({ alsawidget })
+end))
+
+
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
@@ -285,6 +344,29 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
     awful.key({ modkey, "Shift"   }, "r",      function (c) c:redraw()                       end),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
+	awful.key({ modkey, "Shift"   }, "Left",	function (c)
+       local curidx = awful.tag.getidx()
+	   local screen = mouse.screen
+       if curidx == 1 then
+           awful.client.movetotag(tags[client.focus.screen][9])
+		   awful.tag.viewonly(tags[screen][9])
+       else
+           awful.client.movetotag(tags[client.focus.screen][curidx - 1])
+		   awful.tag.viewonly(tags[screen][curidx - 1]) 
+       end
+	end),
+	awful.key({ modkey, "Shift"   }, "Right",	function (c)
+       local curidx = awful.tag.getidx()
+	   local screen = mouse.screen
+       if curidx == 9 then
+           awful.client.movetotag(tags[client.focus.screen][1])
+		   awful.tag.viewonly(tags[screen][1])
+       else
+           awful.client.movetotag(tags[client.focus.screen][curidx + 1])
+		   awful.tag.viewonly(tags[screen][curidx + 1])
+       end
+
+	end),
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be

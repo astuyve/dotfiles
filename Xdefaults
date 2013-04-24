@@ -10,7 +10,7 @@ URxvt.buffered:         true
 URxvt.background:       black
 URxvt.foreground:       white
 URxvt.cursorColor:      green
-URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.keysym.M-v: perl:clipboard:paste
 URxvt.iso14755:         False
 URxvt.perl-ext-common:  matcher,readline,clipboard
 URxvt.urlLauncher:      firefox-trunk
