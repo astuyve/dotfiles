@@ -217,7 +217,7 @@ end, 5, alsa_channel) -- relatively high update time, use of keys/mouse will for
                  function (widget, args)
                      bat_t:set_text(args[3])
                      --bat_t:add_to_object(baticon)
-                     return '<span background="#92B0A0" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF" background="#92B0A0">' .. args[1] .. args[2] .. '%</span></span>'
+                     return '<span background="#3F3F3F" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF" background="#3F3F3F">' .. args[1] .. args[2] .. '%</span></span>'
                  end, 1, "BAT0")
 
 	--wifiwidget = awful.util.spawn_with_shell('run-once nm-applet')
