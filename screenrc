@@ -1,3 +1,3 @@
-hardstatus alwayslastline "%{=b}%{kG}Screen(s): %{b}%w %=%{kG}%c  %D, %M/%d/%Y 
+hardstatus alwayslastline "%{=b}%{kG}Screen(s): %{b}%w %=%{kG}%c  %D, %M/%d/%Y" 
 
 startup_message off
