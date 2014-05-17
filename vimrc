@@ -1,7 +1,26 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/vundle'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+
+call vundle#end()
+
+map <C-n> :NERDTreeToggle<CR>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+
 set backspace=eol,start,indent
-set number
 syntax on
-set tabstop=4
+set number
+set tabstop=2
 set mouse=a
 set numberwidth=1
 set title
@@ -14,5 +33,10 @@ set smartindent
 set laststatus=2
 set hlsearch
 set incsearch
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=2
+set softtabstop=2
+
+filetype plugin indent on
+
+" Close if NERDTree is the last thing open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
