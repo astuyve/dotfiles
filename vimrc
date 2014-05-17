@@ -7,6 +7,7 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
 
 call vundle#end()
 
