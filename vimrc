@@ -36,8 +36,7 @@ set hlsearch
 set incsearch
 set shiftwidth=2
 set softtabstop=2
+set expandtab
 
 filetype plugin indent on
 
-" Close if NERDTree is the last thing open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
