@@ -18,6 +18,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 
+set clipboard=unnamed
 set backspace=eol,start,indent
 syntax on
 set number
@@ -38,5 +39,6 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
-filetype plugin indent on
+autocmd BufWritePre * :%s/\s\+$//e
 
+filetype plugin indent on
