@@ -8,6 +8,8 @@ Plugin 'gmarik/vundle'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()
 
@@ -17,7 +19,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-
+let g:ackprg = 'ag --nogroup --nocolor --column'
 set clipboard=unnamed
 set backspace=eol,start,indent
 syntax on
@@ -42,3 +44,5 @@ set expandtab
 autocmd BufWritePre * :%s/\s\+$//e
 
 filetype plugin indent on
+
+colorscheme solarized
