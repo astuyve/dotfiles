@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Runs a program only once, useful for launching taskbar apps only at boot, not when you restart awesome
-
-pgrep $@ > /dev/null || ($@ &disown)
