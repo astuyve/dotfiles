@@ -5,7 +5,7 @@ These are personal notes for me, but they may help others, so it's in a public r
 1. Install Karabiner Elements
     - `caps` -> `left control`
     - `Vi Mode [S as Trigger Key]`
-2. Install [homebrew]
+2. Install [homebrew](https://brew.sh)
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
