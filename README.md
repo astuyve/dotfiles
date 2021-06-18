@@ -2,7 +2,7 @@
 These are personal notes for me, but they may help others, so it's in a public repo.
 
 # Machine
-1. Install Karabiner Elements
+1. Install [Karabiner Elements](https://karabiner-elements.pqrs.org/)
     - `caps` -> `left control`
     - `Vi Mode [S as Trigger Key]`
 2. Install [homebrew](https://brew.sh)
