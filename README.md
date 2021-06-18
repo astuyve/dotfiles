@@ -42,14 +42,17 @@ git config --global user.email "john.appleseed@example.com"
 
 # Create new SSH Key
 $ ssh-keygen -t rsa -C "your_email@example.com"
+
 # Copy to clipboard
 $ pbcopy < ~/.ssh/id_rsa.pub
+
 # Upload to github, verify/revoke old keys.
 # Test:
 ssh -T git@github.com
 
 # List GPG keys
 gpg --list-secret-keys --keyid-format LONG
+
 # Copy ID, looks like this:
 sec rsa4096/*543C1DB7EF341B87* // ID in stars
 
