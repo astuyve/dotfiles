@@ -1,0 +1,30 @@
+#!/bin/zsh
+# read url from env var
+URL=$1
+BODY=$2
+
+COUNT=0
+# Function to handle interruption
+handle_exit() {
+  echo -e "\nInterrupted! Successful requests before exit: $COUNT"
+  exit 0
+}
+
+# Trap Ctrl-C (SIGINT)
+trap handle_exit SIGINT
+while true
+do
+    #STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -XPOST $URL -H "Content-Type: application/json" -d $BODY)
+    #curl -s -o /dev/null -w "%{http_code}" -XPOST $URL -d @/Users/aj.stuyvenberg/bin/large_input.json -H "Content-Type: application/json"
+    STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL -H "Content-Type: application/json")
+    # Check if status code is 200
+    if [ "$STATUS_CODE" -eq 200 ]; then
+      echo "$STATUS_CODE"
+      ((COUNT++))
+    else
+      break
+    fi
+    #sleep 1
+done
+echo "Successful requests before failure: $COUNT"
+exit 0
